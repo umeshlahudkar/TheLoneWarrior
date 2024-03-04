@@ -8,8 +8,9 @@ public class SoundManager : Singleton<SoundManager>
     private readonly float soundBaseVolume = 1f;
     private readonly float musicBaseVolume = 0.3f;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         ChangeMusicVolume(0.5f);
         ChangeSoundVolume(1);
     }
