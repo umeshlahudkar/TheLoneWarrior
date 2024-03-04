@@ -4,29 +4,32 @@ public class ArrowTrap : MonoBehaviour
 {
     [SerializeField] private float attackCooldown;
     [SerializeField] private Transform firePoint;
-    [SerializeField] private GameObject[] arrows;
+    [SerializeField] private Vector3 direction;
     private float cooldownTimer;
 
     [Header("SFX")]
     [SerializeField] private AudioClip arrowSound;
+
+    [SerializeField] private EnemyProjectile projectilePrefab;
+    private ObjectPool<EnemyProjectile> projectilePool;
+
+    private void Awake()
+    {
+        projectilePool = new ObjectPool<EnemyProjectile>(projectilePrefab, 10);
+    }
 
     private void Attack()
     {
         cooldownTimer = 0;
 
         SoundManager.Instance.PlaySound(arrowSound);
-        arrows[FindArrow()].transform.position = firePoint.position;
-        arrows[FindArrow()].GetComponent<EnemyProjectile>().ActivateProjectile();
+
+        EnemyProjectile projectile = projectilePool.GetObjectFromPool();
+        projectile.transform.position = firePoint.position;
+        projectile.transform.rotation = firePoint.rotation;
+        projectile.SetProjectile(direction, projectilePool);
     }
-    private int FindArrow()
-    {
-        for (int i = 0; i < arrows.Length; i++)
-        {
-            if (!arrows[i].activeInHierarchy)
-                return i;
-        }
-        return 0;
-    }
+   
     private void Update()
     {
         cooldownTimer += Time.deltaTime;

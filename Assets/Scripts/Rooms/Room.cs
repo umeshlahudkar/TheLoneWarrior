@@ -16,8 +16,8 @@ public class Room : MonoBehaviour
         }
 
         //Deactivate rooms
-        if (transform.GetSiblingIndex() != 0)
-            ActivateRoom(false);
+        //if (transform.GetSiblingIndex() != 0)
+            //ActivateRoom(false);
     }
     public void ActivateRoom(bool _status)
     {

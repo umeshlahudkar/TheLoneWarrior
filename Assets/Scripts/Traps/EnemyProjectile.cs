@@ -9,6 +9,8 @@ public class EnemyProjectile : EnemyDamage
     private BoxCollider2D coll;
 
     private bool hit;
+    private ObjectPool<EnemyProjectile> projectilePool;
+    private Vector3 direction;
 
     private void Awake()
     {
@@ -16,37 +18,45 @@ public class EnemyProjectile : EnemyDamage
         coll = GetComponent<BoxCollider2D>();
     }
 
-    public void ActivateProjectile()
+    public void SetProjectile(Vector3 direction, ObjectPool<EnemyProjectile> projectilePool)
     {
+        this.direction = direction;
         hit = false;
         lifetime = 0;
-        gameObject.SetActive(true);
         coll.enabled = true;
+        this.projectilePool = projectilePool;
     }
+
     private void Update()
     {
         if (hit) return;
-        float movementSpeed = speed * Time.deltaTime;
-        transform.Translate(movementSpeed, 0, 0);
+        transform.Translate(direction * speed* Time.deltaTime);
 
         lifetime += Time.deltaTime;
         if (lifetime > resetTime)
-            gameObject.SetActive(false);
+        {
+            Deactivate();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         hit = true;
-        base.OnTriggerEnter2D(collision); //Execute logic from parent script first
+        base.OnTriggerEnter2D(collision);
         coll.enabled = false;
 
         if (anim != null)
-            anim.SetTrigger("explode"); //When the object is a fireball explode it
+        {
+            anim.SetTrigger("explode");
+        }
         else
-            gameObject.SetActive(false); //When this hits any object deactivate arrow
+        {
+            Deactivate();
+        }
     }
+
     private void Deactivate()
     {
-        gameObject.SetActive(false);
+        projectilePool.ReturnObjectToPool(this);
     }
 }
