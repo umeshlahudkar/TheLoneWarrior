@@ -29,7 +29,7 @@ public class UIManager : MonoBehaviour
     public void GameOver()
     {
         gameOverScreen.SetActive(true);
-        SoundManager.instance.PlaySound(gameOverSound);
+        SoundManager.Instance.PlaySound(gameOverSound);
     }
 
     //Restart level
@@ -70,11 +70,11 @@ public class UIManager : MonoBehaviour
     }
     public void SoundVolume()
     {
-        SoundManager.instance.ChangeSoundVolume(0.2f);
+        SoundManager.Instance.ChangeSoundVolume(0.2f);
     }
     public void MusicVolume()
     {
-        SoundManager.instance.ChangeMusicVolume(0.2f);
+        SoundManager.Instance.ChangeMusicVolume(0.2f);
     }
     #endregion
 }

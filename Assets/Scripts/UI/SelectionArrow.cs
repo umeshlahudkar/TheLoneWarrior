@@ -36,7 +36,7 @@ public class SelectionArrow : MonoBehaviour
         currentPosition += _change;
 
         if (_change != 0)
-            SoundManager.instance.PlaySound(changeSound);
+            SoundManager.Instance.PlaySound(changeSound);
 
         if (currentPosition < 0)
             currentPosition = buttons.Length - 1;
@@ -52,7 +52,7 @@ public class SelectionArrow : MonoBehaviour
     }
     private void Interact()
     {
-        SoundManager.instance.PlaySound(interactSound);
+        SoundManager.Instance.PlaySound(interactSound);
 
         //Access the button component on each option and call its function
         buttons[currentPosition].GetComponent<Button>().onClick.Invoke();

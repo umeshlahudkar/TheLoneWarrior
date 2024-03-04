@@ -28,7 +28,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void Attack()
     {
-        SoundManager.instance.PlaySound(fireballSound);
+        SoundManager.Instance.PlaySound(fireballSound);
         anim.SetTrigger("attack");
         cooldownTimer = 0;
 

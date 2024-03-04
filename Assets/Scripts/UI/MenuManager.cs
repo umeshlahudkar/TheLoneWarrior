@@ -29,7 +29,7 @@ public class MenuManager : MonoBehaviour
         currentPosition += _change;
 
         if (_change != 0)
-            SoundManager.instance.PlaySound(changeSound);
+            SoundManager.Instance.PlaySound(changeSound);
 
         if (currentPosition < 0)
             currentPosition = buttons.Length - 1;
@@ -44,7 +44,7 @@ public class MenuManager : MonoBehaviour
     }
     private void Interact()
     {
-        SoundManager.instance.PlaySound(interactSound);
+        SoundManager.Instance.PlaySound(interactSound);
 
         if (currentPosition == 0)
         {

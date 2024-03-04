@@ -37,7 +37,7 @@ public class Health : MonoBehaviour
         {
             anim.SetTrigger("hurt");
             StartCoroutine(Invunerability());
-            SoundManager.instance.PlaySound(hurtSound);
+            SoundManager.Instance.PlaySound(hurtSound);
         }
         else
         {
@@ -51,7 +51,7 @@ public class Health : MonoBehaviour
                 anim.SetTrigger("die");
 
                 dead = true;
-                SoundManager.instance.PlaySound(deathSound);
+                SoundManager.Instance.PlaySound(deathSound);
             }
         }
     }
