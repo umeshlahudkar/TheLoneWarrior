@@ -12,18 +12,19 @@ public class PlayerMovement : MonoBehaviour
     [Header("Sounds")]
     [SerializeField] private AudioClip jumpSound;
 
+    [Header("Ground Check point")]
+    [SerializeField] private Transform groundCheckPoint;
+
     private Rigidbody2D body;
     private Animator anim;
-    private BoxCollider2D boxCollider;
     private float horizontalInput;
 
-    private bool onGround;
+    private bool onGround = false;
 
     private void Awake()
     {
         body = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        boxCollider = GetComponent<BoxCollider2D>();
     }
 
     private void Update()
@@ -43,7 +44,10 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            body.velocity = Vector2.zero;
+            if(body.velocity.magnitude <= 1f)
+            {
+                body.velocity = Vector2.zero;
+            }
         }
 
         anim.SetBool("run", horizontalInput != 0);
@@ -71,10 +75,9 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsOnGround()
     {
-        RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down, 0.1f, groundLayer);
-        return raycastHit.collider != null;
+        Collider2D raycastHit = Physics2D.OverlapCircle(groundCheckPoint.position, 0.05f, groundLayer);
+        return raycastHit != null;
     }
-
     
     public bool CanAttack()
     {
