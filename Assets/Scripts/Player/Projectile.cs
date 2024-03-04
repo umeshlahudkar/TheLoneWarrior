@@ -10,11 +10,14 @@ public class Projectile : MonoBehaviour
     private Animator anim;
     private BoxCollider2D boxCollider;
 
+    private ObjectPool<Projectile> projectilePool;
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider2D>();
     }
+
     private void Update()
     {
         if (hit) return;
@@ -34,11 +37,14 @@ public class Projectile : MonoBehaviour
         if (collision.tag == "Enemy")
             collision.GetComponent<Health>()?.TakeDamage(1);
     }
-    public void SetDirection(float _direction)
+
+    public void SetProjectile(float _direction, ObjectPool<Projectile> _projectilePool)
     {
+        projectilePool = _projectilePool;
+
         lifetime = 0;
         direction = _direction;
-        gameObject.SetActive(true);
+        //gameObject.SetActive(true);
         hit = false;
         boxCollider.enabled = true;
 
@@ -48,8 +54,10 @@ public class Projectile : MonoBehaviour
 
         transform.localScale = new Vector3(localScaleX, transform.localScale.y, transform.localScale.z);
     }
+
     private void Deactivate()
     {
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
+        projectilePool.ReturnObjectToPool(this);
     }
 }
