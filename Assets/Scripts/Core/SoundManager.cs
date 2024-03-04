@@ -10,7 +10,7 @@ public class SoundManager : Singleton<SoundManager>
 
     private void Awake()
     {
-        ChangeMusicVolume(1);
+        ChangeMusicVolume(0.5f);
         ChangeSoundVolume(1);
     }
 
